@@ -1,9 +1,12 @@
 package com.food_delivery_backend.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -13,7 +16,7 @@ import lombok.Setter;
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     private String name;
     private String address;
 
@@ -26,5 +29,8 @@ public class Restaurant {
     private Double rating;
 
     private Boolean isOpen;
+    @OneToMany(mappedBy = "restaurant")
+    @JsonIgnore
+    private List<Food> foods;
 
 }
