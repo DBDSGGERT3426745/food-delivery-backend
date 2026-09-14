@@ -1,4 +1,7 @@
-package com.food_delivery_backend.demo.Service; import com.food_delivery_backend.demo.Entity.User; import com.food_delivery_backend.demo.Repository.UserRepository;
+package com.food_delivery_backend.demo.Service; import com.food_delivery_backend.demo.Entity.Cart;
+import com.food_delivery_backend.demo.Entity.User;
+import com.food_delivery_backend.demo.Repository.CartRepository;
+import com.food_delivery_backend.demo.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,10 +12,19 @@ import java.util.Optional;
 public class UserService {
 
     @Autowired
-    private UserRepository userRepository;
+     UserRepository userRepository;
+
+    @Autowired
+    CartRepository cartRepository;
 
     public User registerUser(User user) {
-        return userRepository.save(user);
+        User savedUser=userRepository.save(user);
+        Cart cart=new Cart();
+        cart.setUser(savedUser);
+        cart.setTotalAmount(0.0);
+        cartRepository.save(cart);
+        savedUser.setCart(cart);
+        return savedUser;
     }
 
     public List<User> getAllUsers() {

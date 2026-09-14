@@ -1,5 +1,6 @@
 package com.food_delivery_backend.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,9 @@ public class User {
     @Column(nullable = false)
     private String password;
     private String phoneNumber;
+    @OneToOne(mappedBy ="user")
+    @JsonIgnore
+    private Cart cart;
+
 
 }
